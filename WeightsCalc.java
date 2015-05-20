@@ -68,6 +68,15 @@ public class WeightsCalc
    {
       this.barWeight = aBarWeight;
    }
+   
+   /**
+    * Sets the available weights to the parameter
+    * @param List<Weights> a list of the available weights
+    */
+   public void setAvailableWeights(List<Weights> anAvailableWeights)
+   {
+      this.availableWeights = anAvailableWeights;
+   }
 
    /**
     * userInput gets input from the user from the command line
@@ -80,6 +89,52 @@ public class WeightsCalc
       String theInput = aScanner.nextLine();
       return theInput;
    }
+   
+   /**
+    * Asks the user to input the weight of their bar and the weight
+    * and number of any weight plates they have avilable.  Will keep
+    * asking for new weights until the user presses enter.  Does
+    * not do any error checking so input that can't be parsed will
+    * cause the program to crash
+    */
+   public void inputWeights()
+   {
+      //create a String for all user input
+      String input;
+      
+      //Ask user for initial input
+      System.out.println("Please enter the weight of your bar >");
+      
+      //get the input and set the bar weight
+      input = this.userInput();      
+      this.setBarWeight(Double.parseDouble(input));
+      
+      //Ask the user to input their weights until they press enter
+      String requestPlatesString = "Please enter the weight of a plate set or press enter to quit >";
+      String requestNumberString = "Please enter the number of these plates >";
+      
+      //Ask the user to enter the weight of the first set of plates
+      System.out.println(requestPlatesString);
+      input = this.userInput();
+      while(!(input.equals("")))
+      {
+         //Make a new Weights object
+         Weights aWeight = new Weights();
+         //Set the weight of the plates to user input
+         aWeight.setWeightPlates(Double.parseDouble(input));
+         
+         //Ask the user to enter the number of plates in this set
+         System.out.println(requestNumberString);
+         input = this.userInput();
+         
+         //Set the number of plates to user input
+         aWeight.setNumberOfPlates(Integer.parseInt(input));
+         
+         //Ask the user for a new weight set
+         System.out.println(requestPlatesString);
+         input = this.userInput();
+      }      
+   }
 
    /**
     * runCalc asks the user to input their bar weight and available weights
@@ -89,7 +144,7 @@ public class WeightsCalc
     */
    public void runCalc()
    {
-      //this.getWeights();
+      this.inputWeights();
       System.out.println(this.toString());
    }
    
