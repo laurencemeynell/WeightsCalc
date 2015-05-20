@@ -27,7 +27,7 @@ public class WeightsCalc
    public WeightsCalc()
    {
       // initialise instance variables
-      this(0.0, new List<Weights>());
+      this(0.0, new ArrayList<Weights>());
       //availableWeights = new TreeMap<>();
    }
    
@@ -36,7 +36,7 @@ public class WeightsCalc
     * @param aBar the weight of your bar
     * @param anAvailableWeights a List containing all your available weights
     */
-   public WeightsCalc(double aBar, MultiSet<Weights> anAvailableWeights)
+   public WeightsCalc(double aBar, List<Weights> anAvailableWeights)
    {
       this.barWeight = aBar;
       this.availableWeights = anAvailableWeights;
