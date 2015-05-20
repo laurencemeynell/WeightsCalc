@@ -102,7 +102,15 @@ public class WeightsCalc
    public String toString()
    {
       String returnString = null;
-      returnString += "Bar: " + this.getBarWeight();
+      
+      returnString += "Bar: " + this.getBarWeight() + "\n";
+      returnString += "Weight         Numbers of plates\n";
+      
+      for(Weights aWeight : this.getAvailableWeights())
+      {
+         returnString += aWeight.getWeightPlates() + "        " +
+            aWeight.getNumberOfPlates() + "\n";
+      }
       
       return returnString;
    }
