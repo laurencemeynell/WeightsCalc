@@ -5,7 +5,7 @@
  * @author Laurence Meynell 
  * @version 20/May/2015
  */
-public class Weights
+public class Weights implements Comparable<Weights>
 {
    private double weightPlates; //weight of the plates
    private int numberOfPlates; //number of plates
@@ -65,4 +65,40 @@ public class Weights
    {
       this.numberOfPlates = aNumberOfPlates;
    }
+   
+   /**
+    * Compares Weights objects.  The Weights object with the larger
+    * sized plates is bigger.
+    * If both Weights have the same size weight plates then the Weights
+    * with the larger number of plates is bigger.
+    * If both the size and number of plates is equal then the Weights objects
+    * are equal
+    * @param the Weights object to be compared with the receiver
+    * @return int negative if reciever is smaller, 0 if they are the same,
+    * positive if the reciever is bigger
+    */
+   @Override
+   public int compareTo(Weights aWeight)
+   {
+      if(this.getWeightPlates() != aWeight.getWeightPlates())
+      {
+         //If here then the Weights have different weight plates
+         if(this.getWeightPlates() > aWeight.getWeightPlates())
+         {
+            //the reciever has bigger plates
+            return 1;
+         }
+         else
+         {
+            //the reciever has smaller plates
+            return -1;
+         }
+      }
+      else
+      {
+         //plates are the same size so test number of plates
+         return this.getNumberOfPlates() - aWeight.getNumberOfPlates();
+      }
+   }
+   
 }
