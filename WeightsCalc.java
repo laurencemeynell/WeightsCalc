@@ -152,7 +152,7 @@ public class WeightsCalc
    
    /**
     * toString returns the weight of the bar followed by the weight and number
-    * of each set of plates
+    * of each set of plates in descending order
     * @return the weight of the bar and number and weight of the plates
     */
    @Override
@@ -161,11 +161,16 @@ public class WeightsCalc
       String returnString = "";
       
       returnString += "Bar: " + this.getBarWeight() + "\n";
-      returnString += "Weight         Numbers of plates\n";
+      returnString += "Weight : Numbers of plates\n";
       
-      for(Weights aWeight : this.getAvailableWeights())
+      //copy the Weights list then sort it in descending order
+      List<Weights> aWeightsList = this.getAvailableWeights();
+      Collections.sort(aWeightsList);
+      Collections.reverse(aWeightsList);
+      
+      for(Weights aWeight : aWeightsList)
       {
-         returnString += aWeight.getWeightPlates() + "        " +
+         returnString += aWeight.getWeightPlates() + " : " +
             aWeight.getNumberOfPlates() + "\n";
       }
       
