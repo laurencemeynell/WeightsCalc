@@ -1,6 +1,15 @@
 import java.util.*;
 /**
- * Write a description of class WeightsCalc here.
+ * WeightsCalc is a prototype to test some concepts for a simple program
+ * It works out how many weights you should put on one side of a barbell
+ * given a target weight, the weight of your bar and your available weights.
+ * 
+ * When run WeightsCalc will ask the user from the command line to input
+ * the weight of their bar.  The it asks for the number and weights of the 
+ * plates owned.  Then it asks for a target weight and performs the calculation.
+ * 
+ * If the user doesn't have the required plates to meet their target it shall warn them
+ * and suggest a configuration that will get them as near as possible to their target.
  * 
  * @author Laurence Meynell 
  * @version 20/May/2015
