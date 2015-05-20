@@ -101,18 +101,17 @@ public class WeightsCalc
    {
       //create a String for all user input
       String input;
+      //create Strings requesting user input
+      String requestPlatesString = "Please enter the weight of a plate set or press enter to quit >";
+      String requestNumberString = "Please enter the number of these plates >";
       
       //Ask user for initial input
       System.out.println("Please enter the weight of your bar >");
       
       //get the input and set the bar weight
       input = this.userInput();      
-      this.setBarWeight(Double.parseDouble(input));
-      
-      //Ask the user to input their weights until they press enter
-      String requestPlatesString = "Please enter the weight of a plate set or press enter to quit >";
-      String requestNumberString = "Please enter the number of these plates >";
-      
+      this.setBarWeight(Double.parseDouble(input));  
+    
       //Ask the user to enter the weight of the first set of plates
       System.out.println(requestPlatesString);
       input = this.userInput();
@@ -129,6 +128,9 @@ public class WeightsCalc
          
          //Set the number of plates to user input
          aWeight.setNumberOfPlates(Integer.parseInt(input));
+         
+         //Add the newly created weights to WeightCalc's list of Weights
+         this.getAvailableWeights().add(aWeight);
          
          //Ask the user for a new weight set
          System.out.println(requestPlatesString);
@@ -156,7 +158,7 @@ public class WeightsCalc
    @Override
    public String toString()
    {
-      String returnString = null;
+      String returnString = "";
       
       returnString += "Bar: " + this.getBarWeight() + "\n";
       returnString += "Weight         Numbers of plates\n";
