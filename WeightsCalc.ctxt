@@ -1,0 +1,8 @@
+#BlueJ class context
+comment0.params=
+comment0.target=WeightsCalc()
+comment0.text=\r\n\ Zero\ argument\ constructor\ for\ objects\ of\ class\ WeightsCalc\r\n\ Initalises\ bar\ weight\ to\ 0.0\ and\ creates\ an\ empty\ map\ of\ available\ weights\r\n
+comment1.params=aBar\ anAvailableWeights
+comment1.target=WeightsCalc(double,\ java.util.SortedMap)
+comment1.text=\r\n\ Two\ argument\ contructor\ for\ objects\ of\ class\ WeightsCalc\r\n\ @param\ aBar\ the\ weight\ of\ your\ bar\r\n\ @param\ anAvailableWeights\ a\ map\ containing\ all\ your\ available\ weights\ \r\n\ the\ key\ should\ be\ what\ weight\ you\ have\ available,\ the\ value\ should\ be\ the\r\n\ number\ of\ whatever\ weight\ you\ have\ available\r\n
+numComments=2
