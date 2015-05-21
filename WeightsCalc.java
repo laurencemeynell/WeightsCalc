@@ -12,31 +12,30 @@ import java.util.*;
  * and suggest a configuration that will get them as near as possible to their target.
  * 
  * @author Laurence Meynell 
- * @version 20/May/2015
+ * @version 21/May/2015
  */
 public class WeightsCalc
 {
-   // instance variables - replace the example below with your own
    private double barWeight;
-   private List<Weights> availableWeights;
+   private SortedMap<Double, Integer> availableWeights;
 
    /**
     * Zero argument constructor for objects of class WeightsCalc
-    * Initalises bar weight to 0.0 and creates an empty List of available weights
+    * Initalises bar weight to 0.0 and creates an empty SortedMap of available weights
     */
    public WeightsCalc()
    {
-      // initialise instance variables
-      this(0.0, new ArrayList<Weights>());
-      //availableWeights = new TreeMap<>();
+      this(0.0, new TreeMap<Double, Integer>());      
    }
 
    /**
     * Two argument contructor for objects of class WeightsCalc
     * @param aBar the weight of your bar
-    * @param anAvailableWeights a List containing all your available weights
+    * @param anAvailableWeights a SortedMap containing all your available weights
+    * The key of your SortedMap should be the weight of your available plates
+    * The value should be the number of those plates that you have
     */
-   public WeightsCalc(double aBar, List<Weights> anAvailableWeights)
+   public WeightsCalc(double aBar, SortedMap<Double, Integer> anAvailableWeights)
    {
       this.barWeight = aBar;
       this.availableWeights = anAvailableWeights;
@@ -52,10 +51,12 @@ public class WeightsCalc
    }
    
    /**
-    * getAvailableWeights returns a List of all the available weights
-    * @return all the available weights as a List
+    * getAvailableWeights returns a SortedMap of all the available weights
+    * @return all the available weights as a SortedMap
+    * The key of your SortedMap should be the weight of your available plates
+    * The value should be the number of those plates that you have
     */
-   public List<Weights> getAvailableWeights()
+   public SortedMap<Double, Integer> getAvailableWeights()
    {
       return this.availableWeights;
    }
@@ -71,9 +72,11 @@ public class WeightsCalc
    
    /**
     * Sets the available weights to the parameter
-    * @param List<Weights> a list of the available weights
+    * @param a SortedMap of the available weights
+    * The key of your SortedMap should be the weight of your available plates
+    * The value should be the number of those plates that you have
     */
-   public void setAvailableWeights(List<Weights> anAvailableWeights)
+   public void setAvailableWeights(SortedMap<Double, Integer> anAvailableWeights)
    {
       this.availableWeights = anAvailableWeights;
    }
@@ -83,7 +86,7 @@ public class WeightsCalc
     * It returns this input as a String
     * @return String whatever the user just inputted
     */
-   public String userInput()
+   private String userInput()
    {
       Scanner aScanner = new Scanner(System.in);
       String theInput = aScanner.nextLine();
@@ -117,20 +120,22 @@ public class WeightsCalc
       input = this.userInput();
       while(!(input.equals("")))
       {
-         //Make a new Weights object
-         Weights aWeight = new Weights();
+         //Initalise variables for new Map entry
+         Double aWeight;
+         Integer aNumberOfPlates;
+         
          //Set the weight of the plates to user input
-         aWeight.setWeightPlates(Double.parseDouble(input));
+         aWeight = (Double.parseDouble(input));
          
          //Ask the user to enter the number of plates in this set
          System.out.println(requestNumberString);
          input = this.userInput();
          
          //Set the number of plates to user input
-         aWeight.setNumberOfPlates(Integer.parseInt(input));
+         aNumberOfPlates = (Integer.parseInt(input));
          
-         //Add the newly created weights to WeightCalc's list of Weights
-         this.getAvailableWeights().add(aWeight);
+         //Add the inputted weights values to WeightCalc's Map of Weights
+         this.getAvailableWeights().put(aWeight, aNumberOfPlates);
          
          //Ask the user for a new weight set
          System.out.println(requestPlatesString);
@@ -161,17 +166,18 @@ public class WeightsCalc
       String returnString = "";
       
       returnString += "Bar: " + this.getBarWeight() + "\n";
-      returnString += "Weight : Numbers of plates\n";
+      returnString += "Weight : Numbers of plates\n";      
       
-      //copy the Weights list then sort it in descending order
-      List<Weights> aWeightsList = this.getAvailableWeights();
-      Collections.sort(aWeightsList);
-      Collections.reverse(aWeightsList);
-      
-      for(Weights aWeight : aWeightsList)
+      //Create a new Treeset with it's ordering reversed to sort in descending order
+      SortedSet<Double> theKeySet = new TreeSet<>(Collections.reverseOrder());
+      //Add keys from availableWeights to new set
+      theKeySet.addAll(this.getAvailableWeights().keySet());      
+     
+      //Iterate over this reservse ordered keyset
+      for(Double aWeight : theKeySet)
       {
-         returnString += aWeight.getWeightPlates() + " : " +
-            aWeight.getNumberOfPlates() + "\n";
+         returnString += aWeight + " : " +
+            this.getAvailableWeights().get(aWeight) + "\n";
       }
       
       return returnString;
