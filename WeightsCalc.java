@@ -187,7 +187,15 @@ public class WeightsCalc
          targetWeights.put(aWeight, weightsToAdd);
       }      
       
-      return targetWeights;
+      if(aTarget == 0.0)
+      {
+         return true;
+      }
+      else
+      {
+         return false;
+      } 
+      
    }
 
    /**
@@ -213,7 +221,26 @@ public class WeightsCalc
       
       System.out.println(this.toString());
       
+      String requestString = "Please enter a target weight or press enter to finish >";
+      
+      System.out.println(requestString);
+      String input = this.userInput();
+      while(input != null)
+      {
+         this.calculateWeights(Double.parseDouble(input));
+         System.out.println(this.targetWeightsString());
+      }
       //this.calculateWeights();
+   }
+   
+   /**
+    * Returns the weight and number of each set of plates needed to make
+    * the current target weight in descending order
+    * @return the weight and number of plates needed to make the target weight
+    */
+   public String targetWeightsString()
+   {
+      return "";
    }
    
    /**
