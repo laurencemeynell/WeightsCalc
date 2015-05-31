@@ -18,6 +18,7 @@ public class WeightsCalc
 {
    private double barWeight;
    private SortedMap<Double, Integer> availableWeights;
+   private SortedMap<Double, Integer> targetWeights;
 
    /**
     * Zero argument constructor for objects of class WeightsCalc
@@ -39,6 +40,7 @@ public class WeightsCalc
    {
       this.barWeight = aBar;
       this.availableWeights = anAvailableWeights;
+      this.targetWeights = new TreeMap<>();
    }
    
    /**
@@ -53,12 +55,23 @@ public class WeightsCalc
    /**
     * getAvailableWeights returns a SortedMap of all the available weights
     * @return all the available weights as a SortedMap
-    * The key of your SortedMap should be the weight of your available plates
-    * The value should be the number of those plates that you have
+    * The key is the weight of your available plates
+    * The value is the number of those plates that you have
     */
    public SortedMap<Double, Integer> getAvailableWeights()
    {
       return this.availableWeights;
+   }
+   
+   /**
+    * getTargetWeights returns a SortedMap of weights that match a weight target
+    * @return the weights that match your target weight as a SortedMap
+    * The key is the weight of your targetted plates
+    * The value is the number of those plates
+    */
+   public SortedMap<Double, Integer> getTargetWeights()
+   {
+      return this.targetWeights;
    }
    
    /**
@@ -142,17 +155,65 @@ public class WeightsCalc
          input = this.userInput();
       }      
    }
+   
+   /**
+    * Returns an arrangement of available weights that will match the 
+    * target weight.  If the target weight is impossible to achieve with 
+    * the available weights it will return false, otherwise it will return
+    * true
+    * @param aTarget the target weight you want to achieve
+    * @return false if the target is unachieveable with your current weights
+    * otherwise true
+    */
+   public boolean calculateWeights(Double aTarget)
+   {
+      SortedMap<Double, Integer> ourWeights = new TreeMap<>(Collections.reverseOrder());
+      ourWeights.putAll(this.getAvailableWeights());
+      
+      this.getTargetWeights().clear();
+      
+      aTarget = aTarget - this.getBarWeight();
+      
+      for(Double aWeight : ourWeights.keySet())
+      {
+         int weightsToAdd = 0;
+         for(int i = 0; i < (ourWeights.get(aWeight) / 2); i++)
+         {            
+            if(aWeight < aTarget)
+            {
+               weightsToAdd = weightsToAdd + 1;
+            }
+         }
+         targetWeights.put(aWeight, weightsToAdd);
+      }      
+      
+      return targetWeights;
+   }
 
    /**
     * runCalc asks the user to input their bar weight and available weights
     * Then it will asks the user to input a target weight and display how to
     * load the side of a barbell to achieve this target weight repeatedly
-    * until the user enters an empty String for a target weight
+    * until the user enters an empty String for a target weight.
+    * Performs no error checking so any input which can't be parsed will 
+    * cause the program to crash
     */
    public void runCalc()
    {
-      this.inputWeights();
+      //uncomment after calculate weights is developed and tested
+      //this.inputWeights();
+      
+      //quickly populate a map for testing purposes
+      this.getAvailableWeights().put(20.0, 2);
+      this.getAvailableWeights().put(15.0, 4);
+      this.getAvailableWeights().put(10.0, 2);
+      this.getAvailableWeights().put(5.0, 4);
+      this.getAvailableWeights().put(2.5, 4);
+      this.getAvailableWeights().put(1.25, 4);
+      
       System.out.println(this.toString());
+      
+      //this.calculateWeights();
    }
    
    /**
